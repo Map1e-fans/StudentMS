@@ -1,0 +1,60 @@
+UseCaseModel StudentMS {
+
+	UC::manageStudent
+	UC::createStudent() include manageStudent definedBySSD(CreateStudentSSD)
+	UC::modifyStudent include manageStudent
+	UC::queryStudent include manageStudent
+	UC::deleteStudent include manageStudent
+
+	Actor Administrator("Administrator") {
+		manageStudent
+	}
+
+	Actor Teacher("Teacher") {
+	}
+
+	Interaction CreateStudentSSD {
+
+		[Participants: Administrator ManageStudentCRUDService]
+
+		CallMessage::CreateStudentSSDCallMessage1(createStudent CreateStudentSSDCallMessage1SendingEnd -> CreateStudentSSDExecution1StartEnd)
+		ReturnMessage::CreateStudentSSDCallMessage1Return(CreateStudentSSDExecution1FinishEnd -> CreateStudentSSDCallMessage1ReturnReceivingEnd CreateStudentSSDCallMessage1)
+
+		Execution::CreateStudentSSDExecution1(ManageStudentCRUDService CreateStudentSSDExecution1StartEnd CreateStudentSSDExecution1FinishEnd)
+
+		MessageEnd::CreateStudentSSDCallMessage1SendingEnd(Administrator CreateStudentSSDCallMessage1)
+		ExecutionEnd::CreateStudentSSDExecution1StartEnd(ManageStudentCRUDService CreateStudentSSDExecution1)
+		ExecutionEnd::CreateStudentSSDExecution1FinishEnd(ManageStudentCRUDService CreateStudentSSDExecution1)
+		MessageEnd::CreateStudentSSDCallMessage1ReturnReceivingEnd(Administrator CreateStudentSSDCallMessage1Return)
+
+	}
+
+	Service ThirdPartyServices {
+
+	}
+
+	Service StudentMSSystem {
+
+	}
+
+	Service ManageStudentCRUDService {
+
+		[Operation]
+		createStudent(id, name)
+
+	}
+
+	Contract ManageStudentCRUDService::createStudent(id : String, name : String) {
+
+		precondition:
+			true
+		postcondition:
+			true
+	}
+
+}
+
+DomainModel StudentMS {
+
+}
+
