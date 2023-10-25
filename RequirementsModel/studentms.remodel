@@ -475,8 +475,8 @@ UseCaseModel StudentMS {
 	Service ManageCourseCRUDService {
 
 		[Operation]
-		createCourse(id, name)
-		modifyCourse(id, name)
+		createCourse(id, name, teacher)
+		modifyCourse(id, name, teacher)
 		queryCourse(id)
 		deleteCourse(id)
 
@@ -508,56 +508,456 @@ UseCaseModel StudentMS {
 
 	}
 
+	Contract ManageStudentCRUDService::createStudent(id : String, name : String, college : String, major : String) : Boolean {
+
+		definition:
+			stu:Student = Student.allInstance()->any(s:Student | s.Id = id),
+			col:College = College.allInstance()->any(c:College | c.Id = college),
+			maj:Major = Major.allInstance()->any(m:Major | m.Id = major)
+
+		precondition:
+			stu.oclIsUndefined() = true and
+			col.oclIsUndefined() = false
+
+		postcondition:
+			let stu1:Student in
+			stu1.oclIsNew() and
+			stu1.Id = id and
+			stu1.Name = name and
+			stu1.college = col.Id and
+			stu1.major = maj.Id and
+			Student.allInstance()->includes(stu1) and
+			result = true
+	}
+
+	Contract ManageCollegeCRUDService::createCollege(id : String, name : String) : Boolean {
+
+		definition:
+			col:College = College.allInstance()->any(c:College | c.Id = id)
+
+		precondition:
+			col.oclIsUndefined() = true
+
+		postcondition:
+			let col1:College in
+			col1.oclIsNew() and
+			col1.Id = id and
+			col1.Name = name and
+			College.allInstance()->includes(col1) and
+			result = true
+	}
+
+	Contract ManageCollegeCRUDService::modifyCollege(id : String, name : String) : Boolean {
+
+		definition:
+			col:College = College.allInstance()->any(c:College | c.Id = id)
+
+		precondition:
+			col.oclIsUndefined() = false
+
+		postcondition:
+			col.Id = id and
+			col.Name = name and
+			result = true
+	}
+
+	Contract ManageCollegeCRUDService::queryCollege(id : String) : College {
+
+		definition:
+			col:College = College.allInstance()->any(c:College | c.Id = id)
+
+		precondition:
+			col.oclIsUndefined() = false
+
+		postcondition:
+			result = col
+	}
+
+	Contract ManageCollegeCRUDService::deleteCollege(id : String) : Boolean {
+
+		definition:
+			col:College = College.allInstance()->any(c:College | c.Id = id)
+
+		precondition:
+			col.oclIsUndefined() = false
+
+		postcondition:
+			College.allInstance()->excludes(col) and
+			result = true
+	}
+
+	Contract ManageMajorCRUDService::deleteMajor(id : String) : Boolean {
+
+		definition:
+			maj:Major = Major.allInstance()->any(m:Major | m.Id = id)
+
+		precondition:
+			maj.oclIsUndefined() = false
+
+		postcondition:
+			Major.allInstance()->excludes(maj) and
+			result = true
+	}
+
+	Contract ManageMajorCRUDService::queryMajor(id : String) : Major {
+
+		definition:
+			maj:Major = Major.allInstance()->any(m:Major | m.Id = id)
+
+		precondition:
+			maj.oclIsUndefined() = false
+
+		postcondition:
+			result = maj
+	}
+
+	Contract ManageMajorCRUDService::modifyMajor(id : String, name : String) : Boolean {
+
+		definition:
+			maj:Major = Major.allInstance()->any(m:Major | m.Id = id)
+
+		precondition:
+			maj.oclIsUndefined() = false
+
+		postcondition:
+			maj.Id = id and
+			maj.Name = name and
+			result = true
+	}
+
+	Contract ManageMajorCRUDService::createMajor(id : String, name : String) : Boolean {
+
+		definition:
+			maj:Major = Major.allInstance()->any(m:Major | m.Id = id)
+
+		precondition:
+			maj.oclIsUndefined() = true
+
+		postcondition:
+			let maj1:Major in
+			maj1.oclIsNew() and
+			maj1.Id = id and
+			maj1.Name = name and
+			Major.allInstance()->includes(maj1) and
+			result = true
+	}
+
+	Contract ManageStudentCRUDService::modifyStudent(id : String, name : String, college : String, major : String) : Boolean {
+
+		definition:
+			stu:Student = Student.allInstance()->any(s:Student | s.Id = id),
+			col:College = College.allInstance()->any(c:College | c.Id = college),
+			maj:Major = Major.allInstance()->any(m:Major | m.Id = major)
+
+		precondition:
+			stu.oclIsUndefined() = false and
+			col.oclIsUndefined() = false and
+			maj.oclIsUndefined() = false
+
+		postcondition:
+			stu.Id = id and
+			stu.Name = name and
+			stu.college = col.Id and
+			stu.major = maj.Id and
+			result = true
+	}
+
+	Contract ManageStudentCRUDService::queryStudent(id : String) : Student {
+
+		definition:
+			stu:Student = Student.allInstance()->any(s:Student | s.Id = id)
+
+		precondition:
+			stu.oclIsUndefined() = false
+
+		postcondition:
+			result = stu
+	}
+
+	Contract ManageStudentCRUDService::deleteStudent(id : String) : Boolean {
+
+		definition:
+			stu:Student = Student.allInstance()->any(s:Student | s.Id = id)
+
+		precondition:
+			stu.oclIsUndefined() = false
+
+		postcondition:
+			Student.allInstance()->excludes(stu) and
+			result = true
+	}
+
+	Contract ManageCourseCRUDService::createCourse(id : String, name : String, teacher: String) : Boolean {
+
+		definition:
+			cou:Course = Course.allInstance()->any(c:Course | c.Id = id),
+			tea:Teacher = Teacher.allInstance()->any(t:Teacher | t.Id = teacher)
+
+		precondition:
+			cou.oclIsUndefined() = true and
+			tea.oclIsUndefined() = false
+
+		postcondition:
+			let cou1:Course in
+			cou1.oclIsNew() and
+			cou1.Id = id and
+			cou1.Name = name and
+			cou1.teacher = tea.Id and
+			Course.allInstance()->includes(cou1) and
+			result = true
+	}
+
+	Contract ManageCourseCRUDService::modifyCourse(id : String, name : String, teacher: String) : Boolean {
+
+		definition:
+			cou:Course = Course.allInstance()->any(c:Course | c.Id = id),
+			tea:Teacher = Teacher.allInstance()->any(t:Teacher | t.Id = teacher)
+
+		precondition:
+			cou.oclIsUndefined() = false and
+			tea.oclIsUndefined() = false
+
+		postcondition:
+			cou.Id = id and
+			cou.Name = name and
+			cou.teacher = tea.Id and
+			result = true
+	}
+
+	Contract ManageCourseCRUDService::queryCourse(id : String) : Course {
+
+		definition:
+			cou:Course = Course.allInstance()->any(c:Course | c.Id = id)
+
+		precondition:
+			cou.oclIsUndefined() = false
+
+		postcondition:
+			result = cou
+	}
+
+	Contract ManageCourseCRUDService::deleteCourse(id : String) : Boolean {
+
+		definition:
+			cou:Course = Course.allInstance()->any(c:Course | c.Id = id)
+
+		precondition:
+			cou.oclIsUndefined() = false
+
+		postcondition:
+			Course.allInstance()->excludes(cou) and
+			result = true
+	}
+
+	Contract ManageTeacherCRUDService::createTeacher(id : String, name : String, college : String, major : String) : Boolean {
+
+		definition:
+			tea:Teacher = Teacher.allInstance()->any(t:Teacher | t.Id = id),
+			col:College = College.allInstance()->any(c:College | c.Id = college)
+
+		precondition:
+			tea.oclIsUndefined() = true and
+			col.oclIsUndefined() = false
+
+		postcondition:
+			let tea1:Teacher in
+			tea1.oclIsNew() and
+			tea1.Id = id and
+			tea1.Name = name and
+			tea1.college = col.Id and
+			Teacher.allInstance()->includes(tea1) and
+			result = true
+	}
+
+	Contract ManageTeacherCRUDService::modifyTeacher(id : String, name : String, college : String, major : String) : Boolean {
+
+		definition:
+			tea:Teacher = Teacher.allInstance()->any(t:Teacher | t.Id = id),
+			col:College = College.allInstance()->any(c:College | c.Id = college)
+
+		precondition:
+			tea.oclIsUndefined() = false and
+			col.oclIsUndefined() = false
+
+		postcondition:
+			tea.Id = id and
+			tea.Name = name and
+			tea.college = col.Id and
+			result = true
+	}
+
+	Contract ManageTeacherCRUDService::deleteTeacher(id : String) : Boolean {
+
+		definition:
+			tea:Teacher = Teacher.allInstance()->any(t:Teacher | t.Id = id)
+
+		precondition:
+			tea.oclIsUndefined() = false
+
+		postcondition:
+			Teacher.allInstance()->excludes(tea) and
+			result = true
+	}
+
+	Contract ManageTeacherCRUDService::queryTeacher(id : String) : Teacher {
+
+		definition:
+			tea:Teacher = Teacher.allInstance()->any(t:Teacher | t.Id = id)
+
+		precondition:
+			tea.oclIsUndefined() = false
+
+		postcondition:
+			result = tea
+	}
+
+	Contract ManageGradeCRUDService::enterGrade(student : String, course : String, grade : Real) : Boolean {
+
+		definition:
+			stu:Student = Student.allInstance()->any(s:Student | s.Id = student),
+			cou:Course = Course.allInstance()->any(c:Course | c.Id = course),
+			sel:CourseSelectionRecord = CourseSelectionRecord.allInstance()->any(r:CourseSelectionRecord | r.Student = student and r.Course = course)
+
+		precondition:
+			stu.oclIsUndefined() = false and
+			cou.oclIsUndefined() = false and
+			sel.oclIsUndefined() = false
+
+		postcondition:
+			let gra:Grade in
+			gra.oclIsNew() and
+			gra.Student = stu.Id and
+			gra.Course = cou.Id and
+			gra.Grade = grade and
+			Grade.allInstance()->includes(gra) and
+			result = true
+	}
+
+	Contract ManageGradeCRUDService::modifyGrade(student : String, course : String, grade : Real) : Boolean {
+
+		definition:
+			stu:Student = Student.allInstance()->any(s:Student | s.Id = student),
+			cou:Course = Course.allInstance()->any(c:Course | c.Id = course),
+			gra:Grade = Grade.allInstance()->any(g:Grade | g.Student = stu.Id and g.Course = cou.Id)
+
+		precondition:
+			stu.oclIsUndefined() = false and
+			cou.oclIsUndefined() = false and
+			gra.oclIsUndefined() = false
+
+		postcondition:
+			gra.Student = stu.Id and
+			gra.Course = cou.Id and
+			gra.Grade = grade and
+			result = true
+	}
+
+	Contract ManageGradeCRUDService::queryGrade(student : String, course : String) : Real {
+
+		definition:
+			stu:Student = Student.allInstance()->any(s:Student | s.Id = student),
+			cou:Course = Course.allInstance()->any(c:Course | c.Id = course),
+			gra:Grade = Grade.allInstance()->any(g:Grade | g.Student = stu.Id and g.Course = cou.Id)
+
+		precondition:
+			stu.oclIsUndefined() = false and
+			cou.oclIsUndefined() = false and
+			gra.oclIsUndefined() = false
+
+		postcondition:
+			result = gra.Grade
+	}
+
+	Contract SelectCourseService::selectCourse(student : String, course : String) : Boolean {
+
+		definition:
+			stu:Student = Student.allInstance()->any(s:Student | s.Id = student),
+			cou:Course = Course.allInstance()->any(c:Course | c.Id = course),
+			sel:CourseSelectionRecord = CourseSelectionRecord.allInstance()->any(r:CourseSelectionRecord | r.Student = student and r.Course = course)
+
+		precondition:
+			stu.oclIsUndefined() = false and
+			cou.oclIsUndefined() = false and
+			sel.oclIsUndefined() = true
+
+		postcondition:
+			let sel1:CourseSelectionRecord in
+			sel1.oclIsNew() and
+			sel1.Student = stu.Id and
+			sel1.Course = cou.Id and
+			CourseSelectionRecord.allInstance()->includes(sel1) and
+			result = true
+	}
+
 }
 
 DomainModel StudentMS {
 
 	Entity User {
-		Id : Integer
+		Id : String
 		Name : String
+		[INV]
+		inv UniqueUserId: User.allInstance()->isUnique(u:User | u.Id)
 	}
 
 	Entity Administrator extends User {
 	}
 
 	@AutoCRUD Entity Student extends User {
-		College : Integer
-		Major : Integer
+		College : String
+		Major : String
 
 		[Refer]
-		StudenttoCourse : Course* Aggregation
-		StudenttoGrade : Grade* Aggregation
+		StudenttoCourse : Course* Association
 	}
 
 	@AutoCRUD Entity Teacher extends User {
-		College : Integer
-		Major : Integer
+		College : String
 	}
 
 	@AutoCRUD Entity Course {
-		Id : Integer
+		Id : String
 		Name : String
+		Teacher : String
+
+		[Refer]
+		CoursetoCourseSelectionRecord : CourseSelectionRecord Association
+		[INV]
+		inv UniqueCourseId: Course.allInstance()->isUnique(c:Course | c.Id)
 	}
 
 	@AutoCRUD Entity Grade {
-		Course : Integer
+		Student: String
+		Course : String
 		Grade : Real
+
 		[Refer]
+		GradetoStudent : Student Association
 	}
 
 	@AutoCRUD Entity College {
-		Id : Integer
+		Id : String
 		Name : String
 
 		[Refer]
-		CollegetoMajor : Major* Aggregation
-		CollegetoTeacher : Teacher Aggregation
-		CollegetoStudent : Student Aggregation
+		CollegetoMajor : Major* Association
+		[INV]
+		inv UniqueCollegeId: College.allInstance()->isUnique(c:College | c.Id)
 	}
 
 	@AutoCRUD Entity Major {
-		Id : Integer
+		Id : String
 		Name : String
+		[INV]
+		inv UniqueMajorId: Major.allInstance()->isUnique(m:Major | c.Id)
+	}
+
+	@AutoCRUD Entity CourseSelectionRecord {
+		Course: String
+		Student: String
+
+		[Refer]
+		CourseSelectionRecordtoStudent : Student Association
 	}
 
 }
