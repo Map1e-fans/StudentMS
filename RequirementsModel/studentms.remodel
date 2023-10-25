@@ -909,10 +909,14 @@ DomainModel StudentMS {
 
 		[Refer]
 		StudenttoCourse : Course* Association
+	StudenttoCollege : College Association
+		StudenttoMajor : Major Association
 	}
 
 	@AutoCRUD Entity Teacher extends User {
 		College : String
+	[Refer]
+		TeachertoCollege : College Association
 	}
 
 	@AutoCRUD Entity Course {
