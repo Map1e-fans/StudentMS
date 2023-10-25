@@ -4,15 +4,15 @@
 
    1. Use Case Diagram
 
-      ![](D:\Coding\StudentMS\Use Case Diagram.svg)
+      ![](Use Case Diagram.svg)
 
    2. System Sequence Diagram
 
-      ![](D:\Coding\StudentMS\SelectCourseSSD.svg)
+      ![](SelectCourseSSD.svg)
 
    3. Concept Class Diagram
 
-      ![](D:\Coding\StudentMS\Conceptual Class Diagram.svg)
+      ![](Conceptual Class Diagram.svg)
 
 2. 简要说明
 
@@ -32,4 +32,4 @@
 
 4. 需求原型化结果截图
 
-   ![](D:\Coding\StudentMS\Prototype.png)
+   ![](Prototype.png)
