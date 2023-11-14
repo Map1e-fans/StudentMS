@@ -1,0 +1,930 @@
+UseCaseModel StudentMS { UseCaseContext AdministratorService { UC :: createCourse include manageCourse definedBySSD(CreateCourseSSD) UC :: queryTeacher include manageTeacher definedBySSD(QueryTeacherSSD) UC :: createCollege include manageCollege definedBySSD(CreateCollegeSSD) UC :: deleteCourse include manageCourse definedBySSD(DeleteCourseSSD) UC :: manageTeacher UC :: manageMajor UC :: deleteTeacher include manageTeacher definedBySSD(DeleteTeacherSSD) UC :: modifyStudent include manageStudent definedBySSD(ModifyStudentSSD) UC :: deleteCollege include manageCollege definedBySSD(DeleteCollegeSSD) UC :: queryCollege include manageCollege definedBySSD(QueryCollegeSSD) UC :: deleteMajor include manageMajor definedBySSD(DeleteMajorSSD) UC :: manageCollege UC :: createMajor include manageMajor definedBySSD(CreateMajorSSD) UC :: deleteStudent include manageStudent definedBySSD(DeleteStudentSSD) UC :: manageStudent UC :: createTeacher include manageTeacher definedBySSD(CreateTeacherSSD) UC :: modifyGrade include manageGrade definedBySSD(ModifyGradeSSD) UC :: queryMajor include manageMajor definedBySSD(QueryMajorSSD) UC :: modifyTeacher include manageTeacher definedBySSD(ModifyTeacherSSD) UC :: modifyMajor include manageMajor definedBySSD(ModifyMajorSSD) UC :: modifyCourse include manageCourse definedBySSD(ModifyCourseSSD) UC :: modifyCollege include manageCollege definedBySSD(ModifyCollegeSSD) UC :: createStudent() include manageStudent definedBySSD(CreateStudentSSD) UC :: enterGrade include manageGrade definedBySSD(EnterGradeSSD) UC :: manageCourse } UseCaseContext TeacherService { UC :: queryCourse include manageCourse definedBySSD(QueryCourseSSD) UC :: queryStudent include manageStudent definedBySSD(QueryStudentSSD) UC :: manageGrade } UseCaseContext StudentService { UC :: queryGrade include manageGrade definedBySSD(QueryGradeSSD) UC :: selectCourse definedBySSD(SelectCourseSSD) }
+
+	Actor Administrator("Administrator") {
+		manageStudent
+		manageCourse
+		manageTeacher
+		manageCollege
+		manageMajor
+	}
+
+	Actor Teacher("Teacher") {
+		queryStudent
+		queryCourse
+		manageGrade
+	}
+
+	Actor Student {
+		queryGrade
+		selectCourse
+	}
+
+	Interaction CreateStudentSSD {
+
+		[Participants: Administrator ManageStudentCRUDService]
+
+		CallMessage::CreateStudentSSDCallMessage1(createStudent CreateStudentSSDCallMessage1SendingEnd -> CreateStudentSSDExecution1StartEnd)
+		ReturnMessage::CreateStudentSSDCallMessage1Return(CreateStudentSSDExecution1FinishEnd -> CreateStudentSSDCallMessage1ReturnReceivingEnd CreateStudentSSDCallMessage1)
+
+		Execution::CreateStudentSSDExecution1(ManageStudentCRUDService CreateStudentSSDExecution1StartEnd CreateStudentSSDExecution1FinishEnd)
+
+		MessageEnd::CreateStudentSSDCallMessage1SendingEnd(Administrator CreateStudentSSDCallMessage1)
+		ExecutionEnd::CreateStudentSSDExecution1StartEnd(ManageStudentCRUDService CreateStudentSSDExecution1)
+		ExecutionEnd::CreateStudentSSDExecution1FinishEnd(ManageStudentCRUDService CreateStudentSSDExecution1)
+		MessageEnd::CreateStudentSSDCallMessage1ReturnReceivingEnd(Administrator CreateStudentSSDCallMessage1Return)
+
+	}
+
+	Interaction ModifyStudentSSD {
+
+		[Participants: Administrator ManageStudentCRUDService]
+
+		CallMessage::ModifyStudentSSDCallMessage1(modifyStudent ModifyStudentSSDCallMessage1SendingEnd -> ModifyStudentSSDExecution1StartEnd)
+		ReturnMessage::ModifyStudentSSDCallMessage1Return(ModifyStudentSSDExecution1FinishEnd -> ModifyStudentSSDCallMessage1ReturnReceivingEnd ModifyStudentSSDCallMessage1)
+
+		Execution::ModifyStudentSSDExecution1(ManageStudentCRUDService ModifyStudentSSDExecution1StartEnd ModifyStudentSSDExecution1FinishEnd)
+
+		MessageEnd::ModifyStudentSSDCallMessage1SendingEnd(Administrator ModifyStudentSSDCallMessage1)
+		ExecutionEnd::ModifyStudentSSDExecution1StartEnd(ManageStudentCRUDService ModifyStudentSSDExecution1)
+		ExecutionEnd::ModifyStudentSSDExecution1FinishEnd(ManageStudentCRUDService ModifyStudentSSDExecution1)
+		MessageEnd::ModifyStudentSSDCallMessage1ReturnReceivingEnd(Administrator ModifyStudentSSDCallMessage1Return)
+
+	}
+
+	Interaction QueryStudentSSD {
+
+		[Participants: Administrator ManageStudentCRUDService]
+
+		CallMessage::QueryStudentSSDCallMessage1(queryStudent QueryStudentSSDCallMessage1SendingEnd -> QueryStudentSSDExecution1StartEnd)
+		ReturnMessage::QueryStudentSSDCallMessage1Return(QueryStudentSSDExecution1FinishEnd -> QueryStudentSSDCallMessage1ReturnReceivingEnd QueryStudentSSDCallMessage1)
+
+		Execution::QueryStudentSSDExecution1(ManageStudentCRUDService QueryStudentSSDExecution1StartEnd QueryStudentSSDExecution1FinishEnd)
+
+		MessageEnd::QueryStudentSSDCallMessage1SendingEnd(Administrator QueryStudentSSDCallMessage1)
+		ExecutionEnd::QueryStudentSSDExecution1StartEnd(ManageStudentCRUDService QueryStudentSSDExecution1)
+		ExecutionEnd::QueryStudentSSDExecution1FinishEnd(ManageStudentCRUDService QueryStudentSSDExecution1)
+		MessageEnd::QueryStudentSSDCallMessage1ReturnReceivingEnd(Administrator QueryStudentSSDCallMessage1Return)
+
+	}
+
+	Interaction DeleteStudentSSD {
+
+		[Participants: Administrator ManageStudentCRUDService]
+
+		CallMessage::DeleteStudentSSDCallMessage1(deleteStudent DeleteStudentSSDCallMessage1SendingEnd -> DeleteStudentSSDExecution1StartEnd)
+		ReturnMessage::DeleteStudentSSDCallMessage1Return(DeleteStudentSSDExecution1FinishEnd -> DeleteStudentSSDCallMessage1ReturnReceivingEnd DeleteStudentSSDCallMessage1)
+
+		Execution::DeleteStudentSSDExecution1(ManageStudentCRUDService DeleteStudentSSDExecution1StartEnd DeleteStudentSSDExecution1FinishEnd)
+
+		MessageEnd::DeleteStudentSSDCallMessage1SendingEnd(Administrator DeleteStudentSSDCallMessage1)
+		ExecutionEnd::DeleteStudentSSDExecution1StartEnd(ManageStudentCRUDService DeleteStudentSSDExecution1)
+		ExecutionEnd::DeleteStudentSSDExecution1FinishEnd(ManageStudentCRUDService DeleteStudentSSDExecution1)
+		MessageEnd::DeleteStudentSSDCallMessage1ReturnReceivingEnd(Administrator DeleteStudentSSDCallMessage1Return)
+
+	}
+
+	Interaction CreateCourseSSD {
+
+		[Participants: Administrator ManageCourseCRUDService]
+
+		CallMessage::CreateCourseSSDCallMessage1(createCourse CreateCourseSSDCallMessage1SendingEnd -> CreateCourseSSDExecution1StartEnd)
+		ReturnMessage::CreateCourseSSDCallMessage1Return(CreateCourseSSDExecution1FinishEnd -> CreateCourseSSDCallMessage1ReturnReceivingEnd CreateCourseSSDCallMessage1)
+
+		Execution::CreateCourseSSDExecution1(ManageCourseCRUDService CreateCourseSSDExecution1StartEnd CreateCourseSSDExecution1FinishEnd)
+
+		MessageEnd::CreateCourseSSDCallMessage1SendingEnd(Administrator CreateCourseSSDCallMessage1)
+		ExecutionEnd::CreateCourseSSDExecution1StartEnd(ManageCourseCRUDService CreateCourseSSDExecution1)
+		ExecutionEnd::CreateCourseSSDExecution1FinishEnd(ManageCourseCRUDService CreateCourseSSDExecution1)
+		MessageEnd::CreateCourseSSDCallMessage1ReturnReceivingEnd(Administrator CreateCourseSSDCallMessage1Return)
+
+	}
+
+	Interaction ModifyCourseSSD {
+
+		[Participants: Administrator ManageCourseCRUDService]
+
+		CallMessage::ModifyCourseSSDCallMessage1(modifyCourse ModifyCourseSSDCallMessage1SendingEnd -> ModifyCourseSSDExecution1StartEnd)
+		ReturnMessage::ModifyCourseSSDCallMessage1Return(ModifyCourseSSDExecution1FinishEnd -> ModifyCourseSSDCallMessage1ReturnReceivingEnd ModifyCourseSSDCallMessage1)
+
+		Execution::ModifyCourseSSDExecution1(ManageCourseCRUDService ModifyCourseSSDExecution1StartEnd ModifyCourseSSDExecution1FinishEnd)
+
+		MessageEnd::ModifyCourseSSDCallMessage1SendingEnd(Administrator ModifyCourseSSDCallMessage1)
+		ExecutionEnd::ModifyCourseSSDExecution1StartEnd(ManageCourseCRUDService ModifyCourseSSDExecution1)
+		ExecutionEnd::ModifyCourseSSDExecution1FinishEnd(ManageCourseCRUDService ModifyCourseSSDExecution1)
+		MessageEnd::ModifyCourseSSDCallMessage1ReturnReceivingEnd(Administrator ModifyCourseSSDCallMessage1Return)
+
+	}
+
+	Interaction QueryCourseSSD {
+
+		[Participants: Administrator ManageCourseCRUDService]
+
+		CallMessage::QueryCourseSSDCallMessage1(queryCourse QueryCourseSSDCallMessage1SendingEnd -> QueryCourseSSDExecution1StartEnd)
+		ReturnMessage::QueryCourseSSDCallMessage1Return(QueryCourseSSDExecution1FinishEnd -> QueryCourseSSDCallMessage1ReturnReceivingEnd QueryCourseSSDCallMessage1)
+
+		Execution::QueryCourseSSDExecution1(ManageCourseCRUDService QueryCourseSSDExecution1StartEnd QueryCourseSSDExecution1FinishEnd)
+
+		MessageEnd::QueryCourseSSDCallMessage1SendingEnd(Administrator QueryCourseSSDCallMessage1)
+		ExecutionEnd::QueryCourseSSDExecution1StartEnd(ManageCourseCRUDService QueryCourseSSDExecution1)
+		ExecutionEnd::QueryCourseSSDExecution1FinishEnd(ManageCourseCRUDService QueryCourseSSDExecution1)
+		MessageEnd::QueryCourseSSDCallMessage1ReturnReceivingEnd(Administrator QueryCourseSSDCallMessage1Return)
+
+	}
+
+	Interaction DeleteCourseSSD {
+
+		[Participants: Administrator ManageCourseCRUDService]
+
+		CallMessage::DeleteCourseSSDCallMessage1(deleteCourse DeleteCourseSSDCallMessage1SendingEnd -> DeleteCourseSSDExecution1StartEnd)
+		ReturnMessage::DeleteCourseSSDCallMessage1Return(DeleteCourseSSDExecution1FinishEnd -> DeleteCourseSSDCallMessage1ReturnReceivingEnd DeleteCourseSSDCallMessage1)
+
+		Execution::DeleteCourseSSDExecution1(ManageCourseCRUDService DeleteCourseSSDExecution1StartEnd DeleteCourseSSDExecution1FinishEnd)
+
+		MessageEnd::DeleteCourseSSDCallMessage1SendingEnd(Administrator DeleteCourseSSDCallMessage1)
+		ExecutionEnd::DeleteCourseSSDExecution1StartEnd(ManageCourseCRUDService DeleteCourseSSDExecution1)
+		ExecutionEnd::DeleteCourseSSDExecution1FinishEnd(ManageCourseCRUDService DeleteCourseSSDExecution1)
+		MessageEnd::DeleteCourseSSDCallMessage1ReturnReceivingEnd(Administrator DeleteCourseSSDCallMessage1Return)
+
+	}
+
+	Interaction EnterGradeSSD {
+
+		[Participants: Teacher ManageGradeCRUDService]
+
+		CallMessage::EnterGradeSSDCallMessage1(enterGrade EnterGradeSSDCallMessage1SendingEnd -> EnterGradeSSDExecution1StartEnd)
+		ReturnMessage::EnterGradeSSDCallMessage1Return(EnterGradeSSDExecution1FinishEnd -> EnterGradeSSDCallMessage1ReturnReceivingEnd EnterGradeSSDCallMessage1)
+
+		Execution::EnterGradeSSDExecution1(ManageGradeCRUDService EnterGradeSSDExecution1StartEnd EnterGradeSSDExecution1FinishEnd)
+
+		MessageEnd::EnterGradeSSDCallMessage1SendingEnd(Teacher EnterGradeSSDCallMessage1)
+		ExecutionEnd::EnterGradeSSDExecution1StartEnd(ManageGradeCRUDService EnterGradeSSDExecution1)
+		ExecutionEnd::EnterGradeSSDExecution1FinishEnd(ManageGradeCRUDService EnterGradeSSDExecution1)
+		MessageEnd::EnterGradeSSDCallMessage1ReturnReceivingEnd(Teacher EnterGradeSSDCallMessage1Return)
+
+	}
+
+	Interaction ModifyGradeSSD {
+
+		[Participants: Teacher ManageGradeCRUDService]
+
+		CallMessage::ModifyGradeSSDCallMessage1(modifyGrade ModifyGradeSSDCallMessage1SendingEnd -> ModifyGradeSSDExecution1StartEnd)
+		ReturnMessage::ModifyGradeSSDCallMessage1Return(ModifyGradeSSDExecution1FinishEnd -> ModifyGradeSSDCallMessage1ReturnReceivingEnd ModifyGradeSSDCallMessage1)
+
+		Execution::ModifyGradeSSDExecution1(ManageGradeCRUDService ModifyGradeSSDExecution1StartEnd ModifyGradeSSDExecution1FinishEnd)
+
+		MessageEnd::ModifyGradeSSDCallMessage1SendingEnd(Teacher ModifyGradeSSDCallMessage1)
+		ExecutionEnd::ModifyGradeSSDExecution1StartEnd(ManageGradeCRUDService ModifyGradeSSDExecution1)
+		ExecutionEnd::ModifyGradeSSDExecution1FinishEnd(ManageGradeCRUDService ModifyGradeSSDExecution1)
+		MessageEnd::ModifyGradeSSDCallMessage1ReturnReceivingEnd(Teacher ModifyGradeSSDCallMessage1Return)
+
+	}
+
+	Interaction QueryGradeSSD {
+
+		[Participants: Teacher ManageGradeCRUDService]
+
+		CallMessage::QueryGradeSSDCallMessage1(queryGrade QueryGradeSSDCallMessage1SendingEnd -> QueryGradeSSDExecution1StartEnd)
+		ReturnMessage::QueryGradeSSDCallMessage1Return(QueryGradeSSDExecution1FinishEnd -> QueryGradeSSDCallMessage1ReturnReceivingEnd QueryGradeSSDCallMessage1)
+
+		Execution::QueryGradeSSDExecution1(ManageGradeCRUDService QueryGradeSSDExecution1StartEnd QueryGradeSSDExecution1FinishEnd)
+
+		MessageEnd::QueryGradeSSDCallMessage1SendingEnd(Teacher QueryGradeSSDCallMessage1)
+		ExecutionEnd::QueryGradeSSDExecution1StartEnd(ManageGradeCRUDService QueryGradeSSDExecution1)
+		ExecutionEnd::QueryGradeSSDExecution1FinishEnd(ManageGradeCRUDService QueryGradeSSDExecution1)
+		MessageEnd::QueryGradeSSDCallMessage1ReturnReceivingEnd(Teacher QueryGradeSSDCallMessage1Return)
+
+	}
+
+	Interaction CreateTeacherSSD {
+
+		[Participants: Administrator ManageTeacherCRUDService]
+
+		CallMessage::CreateTeacherSSDCallMessage1(createTeacher CreateTeacherSSDCallMessage1SendingEnd -> CreateTeacherSSDExecution1StartEnd)
+		ReturnMessage::CreateTeacherSSDCallMessage1Return(CreateTeacherSSDExecution1FinishEnd -> CreateTeacherSSDCallMessage1ReturnReceivingEnd CreateTeacherSSDCallMessage1)
+
+		Execution::CreateTeacherSSDExecution1(ManageTeacherCRUDService CreateTeacherSSDExecution1StartEnd CreateTeacherSSDExecution1FinishEnd)
+
+		MessageEnd::CreateTeacherSSDCallMessage1SendingEnd(Administrator CreateTeacherSSDCallMessage1)
+		ExecutionEnd::CreateTeacherSSDExecution1StartEnd(ManageTeacherCRUDService CreateTeacherSSDExecution1)
+		ExecutionEnd::CreateTeacherSSDExecution1FinishEnd(ManageTeacherCRUDService CreateTeacherSSDExecution1)
+		MessageEnd::CreateTeacherSSDCallMessage1ReturnReceivingEnd(Administrator CreateTeacherSSDCallMessage1Return)
+
+	}
+
+	Interaction ModifyTeacherSSD {
+
+		[Participants: Administrator ManageTeacherCRUDService]
+
+		CallMessage::ModifyTeacherSSDCallMessage1(modifyTeacher ModifyTeacherSSDCallMessage1SendingEnd -> ModifyTeacherSSDExecution1StartEnd)
+		ReturnMessage::ModifyTeacherSSDCallMessage1Return(ModifyTeacherSSDExecution1FinishEnd -> ModifyTeacherSSDCallMessage1ReturnReceivingEnd ModifyTeacherSSDCallMessage1)
+
+		Execution::ModifyTeacherSSDExecution1(ManageTeacherCRUDService ModifyTeacherSSDExecution1StartEnd ModifyTeacherSSDExecution1FinishEnd)
+
+		MessageEnd::ModifyTeacherSSDCallMessage1SendingEnd(Administrator ModifyTeacherSSDCallMessage1)
+		ExecutionEnd::ModifyTeacherSSDExecution1StartEnd(ManageTeacherCRUDService ModifyTeacherSSDExecution1)
+		ExecutionEnd::ModifyTeacherSSDExecution1FinishEnd(ManageTeacherCRUDService ModifyTeacherSSDExecution1)
+		MessageEnd::ModifyTeacherSSDCallMessage1ReturnReceivingEnd(Administrator ModifyTeacherSSDCallMessage1Return)
+
+	}
+
+	Interaction QueryTeacherSSD {
+
+		[Participants: Administrator ManageTeacherCRUDService]
+
+		CallMessage::QueryTeacherSSDCallMessage1(queryTeacher QueryTeacherSSDCallMessage1SendingEnd -> QueryTeacherSSDExecution1StartEnd)
+		ReturnMessage::QueryTeacherSSDCallMessage1Return(QueryTeacherSSDExecution1FinishEnd -> QueryTeacherSSDCallMessage1ReturnReceivingEnd QueryTeacherSSDCallMessage1)
+
+		Execution::QueryTeacherSSDExecution1(ManageTeacherCRUDService QueryTeacherSSDExecution1StartEnd QueryTeacherSSDExecution1FinishEnd)
+
+		MessageEnd::QueryTeacherSSDCallMessage1SendingEnd(Administrator QueryTeacherSSDCallMessage1)
+		ExecutionEnd::QueryTeacherSSDExecution1StartEnd(ManageTeacherCRUDService QueryTeacherSSDExecution1)
+		ExecutionEnd::QueryTeacherSSDExecution1FinishEnd(ManageTeacherCRUDService QueryTeacherSSDExecution1)
+		MessageEnd::QueryTeacherSSDCallMessage1ReturnReceivingEnd(Administrator QueryTeacherSSDCallMessage1Return)
+
+	}
+
+	Interaction DeleteTeacherSSD {
+
+		[Participants: Administrator ManageTeacherCRUDService]
+
+		CallMessage::DeleteTeacherSSDCallMessage1(deleteTeacher DeleteTeacherSSDCallMessage1SendingEnd -> DeleteTeacherSSDExecution1StartEnd)
+		ReturnMessage::DeleteTeacherSSDCallMessage1Return(DeleteTeacherSSDExecution1FinishEnd -> DeleteTeacherSSDCallMessage1ReturnReceivingEnd DeleteTeacherSSDCallMessage1)
+
+		Execution::DeleteTeacherSSDExecution1(ManageTeacherCRUDService DeleteTeacherSSDExecution1StartEnd DeleteTeacherSSDExecution1FinishEnd)
+
+		MessageEnd::DeleteTeacherSSDCallMessage1SendingEnd(Administrator DeleteTeacherSSDCallMessage1)
+		ExecutionEnd::DeleteTeacherSSDExecution1StartEnd(ManageTeacherCRUDService DeleteTeacherSSDExecution1)
+		ExecutionEnd::DeleteTeacherSSDExecution1FinishEnd(ManageTeacherCRUDService DeleteTeacherSSDExecution1)
+		MessageEnd::DeleteTeacherSSDCallMessage1ReturnReceivingEnd(Administrator DeleteTeacherSSDCallMessage1Return)
+
+	}
+
+	Interaction SelectCourseSSD {
+
+		[Participants: Student SelectCourseService]
+
+		CallMessage::SelectCourseSSDCallMessage1(selectCourse SelectCourseSSDCallMessage1SendingEnd -> SelectCourseSSDExecution1StartEnd)
+		ReturnMessage::SelectCourseSSDCallMessage1Return(SelectCourseSSDExecution1FinishEnd -> SelectCourseSSDCallMessage1ReturnReceivingEnd SelectCourseSSDCallMessage1)
+
+		Execution::SelectCourseSSDExecution1(SelectCourseService SelectCourseSSDExecution1StartEnd SelectCourseSSDExecution1FinishEnd)
+
+		MessageEnd::SelectCourseSSDCallMessage1SendingEnd(Student SelectCourseSSDCallMessage1)
+		ExecutionEnd::SelectCourseSSDExecution1StartEnd(SelectCourseService SelectCourseSSDExecution1)
+		ExecutionEnd::SelectCourseSSDExecution1FinishEnd(SelectCourseService SelectCourseSSDExecution1)
+		MessageEnd::SelectCourseSSDCallMessage1ReturnReceivingEnd(Student SelectCourseSSDCallMessage1Return)
+
+	}
+
+	Interaction CreateCollegeSSD {
+
+		[Participants: Administrator ManageCollegeCRUDService]
+
+		CallMessage::CreateCollegeSSDCallMessage1(createCollege CreateCollegeSSDCallMessage1SendingEnd -> CreateCollegeSSDExecution1StartEnd)
+		ReturnMessage::CreateCollegeSSDCallMessage1Return(CreateCollegeSSDExecution1FinishEnd -> CreateCollegeSSDCallMessage1ReturnReceivingEnd CreateCollegeSSDCallMessage1)
+
+		Execution::CreateCollegeSSDExecution1(ManageCollegeCRUDService CreateCollegeSSDExecution1StartEnd CreateCollegeSSDExecution1FinishEnd)
+
+		MessageEnd::CreateCollegeSSDCallMessage1SendingEnd(Administrator CreateCollegeSSDCallMessage1)
+		ExecutionEnd::CreateCollegeSSDExecution1StartEnd(ManageCollegeCRUDService CreateCollegeSSDExecution1)
+		ExecutionEnd::CreateCollegeSSDExecution1FinishEnd(ManageCollegeCRUDService CreateCollegeSSDExecution1)
+		MessageEnd::CreateCollegeSSDCallMessage1ReturnReceivingEnd(Administrator CreateCollegeSSDCallMessage1Return)
+
+	}
+
+	Interaction ModifyCollegeSSD {
+
+		[Participants: Administrator ManageCollegeCRUDService]
+
+		CallMessage::ModifyCollegeSSDCallMessage1(modifyCollege ModifyCollegeSSDCallMessage1SendingEnd -> ModifyCollegeSSDExecution1StartEnd)
+		ReturnMessage::ModifyCollegeSSDCallMessage1Return(ModifyCollegeSSDExecution1FinishEnd -> ModifyCollegeSSDCallMessage1ReturnReceivingEnd ModifyCollegeSSDCallMessage1)
+
+		Execution::ModifyCollegeSSDExecution1(ManageCollegeCRUDService ModifyCollegeSSDExecution1StartEnd ModifyCollegeSSDExecution1FinishEnd)
+
+		MessageEnd::ModifyCollegeSSDCallMessage1SendingEnd(Administrator ModifyCollegeSSDCallMessage1)
+		ExecutionEnd::ModifyCollegeSSDExecution1StartEnd(ManageCollegeCRUDService ModifyCollegeSSDExecution1)
+		ExecutionEnd::ModifyCollegeSSDExecution1FinishEnd(ManageCollegeCRUDService ModifyCollegeSSDExecution1)
+		MessageEnd::ModifyCollegeSSDCallMessage1ReturnReceivingEnd(Administrator ModifyCollegeSSDCallMessage1Return)
+
+	}
+
+	Interaction QueryCollegeSSD {
+
+		[Participants: Administrator ManageCollegeCRUDService]
+
+		CallMessage::QueryCollegeSSDCallMessage1(queryCollege QueryCollegeSSDCallMessage1SendingEnd -> QueryCollegeSSDExecution1StartEnd)
+		ReturnMessage::QueryCollegeSSDCallMessage1Return(QueryCollegeSSDExecution1FinishEnd -> QueryCollegeSSDCallMessage1ReturnReceivingEnd QueryCollegeSSDCallMessage1)
+
+		Execution::QueryCollegeSSDExecution1(ManageCollegeCRUDService QueryCollegeSSDExecution1StartEnd QueryCollegeSSDExecution1FinishEnd)
+
+		MessageEnd::QueryCollegeSSDCallMessage1SendingEnd(Administrator QueryCollegeSSDCallMessage1)
+		ExecutionEnd::QueryCollegeSSDExecution1StartEnd(ManageCollegeCRUDService QueryCollegeSSDExecution1)
+		ExecutionEnd::QueryCollegeSSDExecution1FinishEnd(ManageCollegeCRUDService QueryCollegeSSDExecution1)
+		MessageEnd::QueryCollegeSSDCallMessage1ReturnReceivingEnd(Administrator QueryCollegeSSDCallMessage1Return)
+
+	}
+
+	Interaction DeleteCollegeSSD {
+
+		[Participants: Administrator ManageCollegeCRUDService]
+
+		CallMessage::DeleteCollegeSSDCallMessage1(deleteCollege DeleteCollegeSSDCallMessage1SendingEnd -> DeleteCollegeSSDExecution1StartEnd)
+		ReturnMessage::DeleteCollegeSSDCallMessage1Return(DeleteCollegeSSDExecution1FinishEnd -> DeleteCollegeSSDCallMessage1ReturnReceivingEnd DeleteCollegeSSDCallMessage1)
+
+		Execution::DeleteCollegeSSDExecution1(ManageCollegeCRUDService DeleteCollegeSSDExecution1StartEnd DeleteCollegeSSDExecution1FinishEnd)
+
+		MessageEnd::DeleteCollegeSSDCallMessage1SendingEnd(Administrator DeleteCollegeSSDCallMessage1)
+		ExecutionEnd::DeleteCollegeSSDExecution1StartEnd(ManageCollegeCRUDService DeleteCollegeSSDExecution1)
+		ExecutionEnd::DeleteCollegeSSDExecution1FinishEnd(ManageCollegeCRUDService DeleteCollegeSSDExecution1)
+		MessageEnd::DeleteCollegeSSDCallMessage1ReturnReceivingEnd(Administrator DeleteCollegeSSDCallMessage1Return)
+
+	}
+
+	Interaction CreateMajorSSD {
+
+		[Participants: Administrator ManageMajorCRUDService]
+
+		CallMessage::CreateMajorSSDCallMessage1(createMajor CreateMajorSSDCallMessage1SendingEnd -> CreateMajorSSDExecution1StartEnd)
+		ReturnMessage::CreateMajorSSDCallMessage1Return(CreateMajorSSDExecution1FinishEnd -> CreateMajorSSDCallMessage1ReturnReceivingEnd CreateMajorSSDCallMessage1)
+
+		Execution::CreateMajorSSDExecution1(ManageMajorCRUDService CreateMajorSSDExecution1StartEnd CreateMajorSSDExecution1FinishEnd)
+
+		MessageEnd::CreateMajorSSDCallMessage1SendingEnd(Administrator CreateMajorSSDCallMessage1)
+		ExecutionEnd::CreateMajorSSDExecution1StartEnd(ManageMajorCRUDService CreateMajorSSDExecution1)
+		ExecutionEnd::CreateMajorSSDExecution1FinishEnd(ManageMajorCRUDService CreateMajorSSDExecution1)
+		MessageEnd::CreateMajorSSDCallMessage1ReturnReceivingEnd(Administrator CreateMajorSSDCallMessage1Return)
+
+	}
+
+	Interaction ModifyMajorSSD {
+
+		[Participants: Administrator ManageMajorCRUDService]
+
+		CallMessage::ModifyMajorSSDCallMessage1(modifyMajor ModifyMajorSSDCallMessage1SendingEnd -> ModifyMajorSSDExecution1StartEnd)
+		ReturnMessage::ModifyMajorSSDCallMessage1Return(ModifyMajorSSDExecution1FinishEnd -> ModifyMajorSSDCallMessage1ReturnReceivingEnd ModifyMajorSSDCallMessage1)
+
+		Execution::ModifyMajorSSDExecution1(ManageMajorCRUDService ModifyMajorSSDExecution1StartEnd ModifyMajorSSDExecution1FinishEnd)
+
+		MessageEnd::ModifyMajorSSDCallMessage1SendingEnd(Administrator ModifyMajorSSDCallMessage1)
+		ExecutionEnd::ModifyMajorSSDExecution1StartEnd(ManageMajorCRUDService ModifyMajorSSDExecution1)
+		ExecutionEnd::ModifyMajorSSDExecution1FinishEnd(ManageMajorCRUDService ModifyMajorSSDExecution1)
+		MessageEnd::ModifyMajorSSDCallMessage1ReturnReceivingEnd(Administrator ModifyMajorSSDCallMessage1Return)
+
+	}
+
+	Interaction QueryMajorSSD {
+
+		[Participants: Administrator ManageMajorCRUDService]
+
+		CallMessage::QueryMajorSSDCallMessage1(queryMajor QueryMajorSSDCallMessage1SendingEnd -> QueryMajorSSDExecution1StartEnd)
+		ReturnMessage::QueryMajorSSDCallMessage1Return(QueryMajorSSDExecution1FinishEnd -> QueryMajorSSDCallMessage1ReturnReceivingEnd QueryMajorSSDCallMessage1)
+
+		Execution::QueryMajorSSDExecution1(ManageMajorCRUDService QueryMajorSSDExecution1StartEnd QueryMajorSSDExecution1FinishEnd)
+
+		MessageEnd::QueryMajorSSDCallMessage1SendingEnd(Administrator QueryMajorSSDCallMessage1)
+		ExecutionEnd::QueryMajorSSDExecution1StartEnd(ManageMajorCRUDService QueryMajorSSDExecution1)
+		ExecutionEnd::QueryMajorSSDExecution1FinishEnd(ManageMajorCRUDService QueryMajorSSDExecution1)
+		MessageEnd::QueryMajorSSDCallMessage1ReturnReceivingEnd(Administrator QueryMajorSSDCallMessage1Return)
+
+	}
+
+	Interaction DeleteMajorSSD {
+
+		[Participants: Administrator ManageMajorCRUDService]
+
+		CallMessage::DeleteMajorSSDCallMessage1(deleteMajor DeleteMajorSSDCallMessage1SendingEnd -> DeleteMajorSSDExecution1StartEnd)
+		ReturnMessage::DeleteMajorSSDCallMessage1Return(DeleteMajorSSDExecution1FinishEnd -> DeleteMajorSSDCallMessage1ReturnReceivingEnd DeleteMajorSSDCallMessage1)
+
+		Execution::DeleteMajorSSDExecution1(ManageMajorCRUDService DeleteMajorSSDExecution1StartEnd DeleteMajorSSDExecution1FinishEnd)
+
+		MessageEnd::DeleteMajorSSDCallMessage1SendingEnd(Administrator DeleteMajorSSDCallMessage1)
+		ExecutionEnd::DeleteMajorSSDExecution1StartEnd(ManageMajorCRUDService DeleteMajorSSDExecution1)
+		ExecutionEnd::DeleteMajorSSDExecution1FinishEnd(ManageMajorCRUDService DeleteMajorSSDExecution1)
+		MessageEnd::DeleteMajorSSDCallMessage1ReturnReceivingEnd(Administrator DeleteMajorSSDCallMessage1Return)
+
+	}
+
+	Service ManageCollegeCRUDService {
+
+		[Operation]
+		createCollege(id, name)
+		modifyCollege(id, name)
+		queryCollege(id)
+		deleteCollege(id)
+
+	}
+
+	Service ManageMajorCRUDService {
+
+		[Operation]
+		createMajor(id, name)
+		modifyMajor(id, name)
+		queryMajor(id)
+		deleteMajor(id)
+
+	}
+
+	Service ThirdPartyServices {
+
+	}
+
+	Service StudentMSSystem {
+
+	}
+
+	Service ManageStudentCRUDService {
+
+		[Operation]
+		createStudent(id, name, college, major)
+		modifyStudent(id, name, college, major)
+		queryStudent(id)
+		deleteStudent(id)
+
+	}
+
+	Service ManageCourseCRUDService {
+
+		[Operation]
+		createCourse(id, name, teacher)
+		modifyCourse(id, name, teacher)
+		queryCourse(id)
+		deleteCourse(id)
+
+	}
+
+	Service ManageGradeCRUDService {
+
+		[Operation]
+		enterGrade(student, course, grade)
+		modifyGrade(student, course, grade)
+		queryGrade(student, course)
+
+	}
+
+	Service ManageTeacherCRUDService {
+
+		[Operation]
+		createTeacher(id, name, college, major)
+		modifyTeacher(id, name, college, major)
+		queryTeacher(id)
+		deleteTeacher(id)
+
+	}
+
+	Service SelectCourseService {
+
+		[Operation]
+		selectCourse(student, course)
+
+	}
+
+	Contract ManageStudentCRUDService::createStudent(id : String, name : String, college : String, major : String) : Boolean {
+
+		definition:
+			stu:Student = Student.allInstance()->any(s:Student | s.Id = id),
+			col:College = College.allInstance()->any(c:College | c.Id = college),
+			maj:Major = Major.allInstance()->any(m:Major | m.Id = major)
+
+		precondition:
+			stu.oclIsUndefined() = true and
+			col.oclIsUndefined() = false
+
+		postcondition:
+			let stu1:Student in
+			stu1.oclIsNew() and
+			stu1.Id = id and
+			stu1.Name = name and
+			stu1.college = col.Id and
+			stu1.major = maj.Id and
+			Student.allInstance()->includes(stu1) and
+			result = true
+	}
+
+	Contract ManageCollegeCRUDService::createCollege(id : String, name : String) : Boolean {
+
+		definition:
+			col:College = College.allInstance()->any(c:College | c.Id = id)
+
+		precondition:
+			col.oclIsUndefined() = true
+
+		postcondition:
+			let col1:College in
+			col1.oclIsNew() and
+			col1.Id = id and
+			col1.Name = name and
+			College.allInstance()->includes(col1) and
+			result = true
+	}
+
+	Contract ManageCollegeCRUDService::modifyCollege(id : String, name : String) : Boolean {
+
+		definition:
+			col:College = College.allInstance()->any(c:College | c.Id = id)
+
+		precondition:
+			col.oclIsUndefined() = false
+
+		postcondition:
+			col.Id = id and
+			col.Name = name and
+			result = true
+	}
+
+	Contract ManageCollegeCRUDService::queryCollege(id : String) : College {
+
+		definition:
+			col:College = College.allInstance()->any(c:College | c.Id = id)
+
+		precondition:
+			col.oclIsUndefined() = false
+
+		postcondition:
+			result = col
+	}
+
+	Contract ManageCollegeCRUDService::deleteCollege(id : String) : Boolean {
+
+		definition:
+			col:College = College.allInstance()->any(c:College | c.Id = id)
+
+		precondition:
+			col.oclIsUndefined() = false
+
+		postcondition:
+			College.allInstance()->excludes(col) and
+			result = true
+	}
+
+	Contract ManageMajorCRUDService::deleteMajor(id : String) : Boolean {
+
+		definition:
+			maj:Major = Major.allInstance()->any(m:Major | m.Id = id)
+
+		precondition:
+			maj.oclIsUndefined() = false
+
+		postcondition:
+			Major.allInstance()->excludes(maj) and
+			result = true
+	}
+
+	Contract ManageMajorCRUDService::queryMajor(id : String) : Major {
+
+		definition:
+			maj:Major = Major.allInstance()->any(m:Major | m.Id = id)
+
+		precondition:
+			maj.oclIsUndefined() = false
+
+		postcondition:
+			result = maj
+	}
+
+	Contract ManageMajorCRUDService::modifyMajor(id : String, name : String) : Boolean {
+
+		definition:
+			maj:Major = Major.allInstance()->any(m:Major | m.Id = id)
+
+		precondition:
+			maj.oclIsUndefined() = false
+
+		postcondition:
+			maj.Id = id and
+			maj.Name = name and
+			result = true
+	}
+
+	Contract ManageMajorCRUDService::createMajor(id : String, name : String) : Boolean {
+
+		definition:
+			maj:Major = Major.allInstance()->any(m:Major | m.Id = id)
+
+		precondition:
+			maj.oclIsUndefined() = true
+
+		postcondition:
+			let maj1:Major in
+			maj1.oclIsNew() and
+			maj1.Id = id and
+			maj1.Name = name and
+			Major.allInstance()->includes(maj1) and
+			result = true
+	}
+
+	Contract ManageStudentCRUDService::modifyStudent(id : String, name : String, college : String, major : String) : Boolean {
+
+		definition:
+			stu:Student = Student.allInstance()->any(s:Student | s.Id = id),
+			col:College = College.allInstance()->any(c:College | c.Id = college),
+			maj:Major = Major.allInstance()->any(m:Major | m.Id = major)
+
+		precondition:
+			stu.oclIsUndefined() = false and
+			col.oclIsUndefined() = false and
+			maj.oclIsUndefined() = false
+
+		postcondition:
+			stu.Id = id and
+			stu.Name = name and
+			stu.college = col.Id and
+			stu.major = maj.Id and
+			result = true
+	}
+
+	Contract ManageStudentCRUDService::queryStudent(id : String) : Student {
+
+		definition:
+			stu:Student = Student.allInstance()->any(s:Student | s.Id = id)
+
+		precondition:
+			stu.oclIsUndefined() = false
+
+		postcondition:
+			result = stu
+	}
+
+	Contract ManageStudentCRUDService::deleteStudent(id : String) : Boolean {
+
+		definition:
+			stu:Student = Student.allInstance()->any(s:Student | s.Id = id)
+
+		precondition:
+			stu.oclIsUndefined() = false
+
+		postcondition:
+			Student.allInstance()->excludes(stu) and
+			result = true
+	}
+
+	Contract ManageCourseCRUDService::createCourse(id : String, name : String, teacher: String) : Boolean {
+
+		definition:
+			cou:Course = Course.allInstance()->any(c:Course | c.Id = id),
+			tea:Teacher = Teacher.allInstance()->any(t:Teacher | t.Id = teacher)
+
+		precondition:
+			cou.oclIsUndefined() = true and
+			tea.oclIsUndefined() = false
+
+		postcondition:
+			let cou1:Course in
+			cou1.oclIsNew() and
+			cou1.Id = id and
+			cou1.Name = name and
+			cou1.teacher = tea.Id and
+			Course.allInstance()->includes(cou1) and
+			result = true
+	}
+
+	Contract ManageCourseCRUDService::modifyCourse(id : String, name : String, teacher: String) : Boolean {
+
+		definition:
+			cou:Course = Course.allInstance()->any(c:Course | c.Id = id),
+			tea:Teacher = Teacher.allInstance()->any(t:Teacher | t.Id = teacher)
+
+		precondition:
+			cou.oclIsUndefined() = false and
+			tea.oclIsUndefined() = false
+
+		postcondition:
+			cou.Id = id and
+			cou.Name = name and
+			cou.teacher = tea.Id and
+			result = true
+	}
+
+	Contract ManageCourseCRUDService::queryCourse(id : String) : Course {
+
+		definition:
+			cou:Course = Course.allInstance()->any(c:Course | c.Id = id)
+
+		precondition:
+			cou.oclIsUndefined() = false
+
+		postcondition:
+			result = cou
+	}
+
+	Contract ManageCourseCRUDService::deleteCourse(id : String) : Boolean {
+
+		definition:
+			cou:Course = Course.allInstance()->any(c:Course | c.Id = id)
+
+		precondition:
+			cou.oclIsUndefined() = false
+
+		postcondition:
+			Course.allInstance()->excludes(cou) and
+			result = true
+	}
+
+	Contract ManageTeacherCRUDService::createTeacher(id : String, name : String, college : String, major : String) : Boolean {
+
+		definition:
+			tea:Teacher = Teacher.allInstance()->any(t:Teacher | t.Id = id),
+			col:College = College.allInstance()->any(c:College | c.Id = college)
+
+		precondition:
+			tea.oclIsUndefined() = true and
+			col.oclIsUndefined() = false
+
+		postcondition:
+			let tea1:Teacher in
+			tea1.oclIsNew() and
+			tea1.Id = id and
+			tea1.Name = name and
+			tea1.college = col.Id and
+			Teacher.allInstance()->includes(tea1) and
+			result = true
+	}
+
+	Contract ManageTeacherCRUDService::modifyTeacher(id : String, name : String, college : String, major : String) : Boolean {
+
+		definition:
+			tea:Teacher = Teacher.allInstance()->any(t:Teacher | t.Id = id),
+			col:College = College.allInstance()->any(c:College | c.Id = college)
+
+		precondition:
+			tea.oclIsUndefined() = false and
+			col.oclIsUndefined() = false
+
+		postcondition:
+			tea.Id = id and
+			tea.Name = name and
+			tea.college = col.Id and
+			result = true
+	}
+
+	Contract ManageTeacherCRUDService::deleteTeacher(id : String) : Boolean {
+
+		definition:
+			tea:Teacher = Teacher.allInstance()->any(t:Teacher | t.Id = id)
+
+		precondition:
+			tea.oclIsUndefined() = false
+
+		postcondition:
+			Teacher.allInstance()->excludes(tea) and
+			result = true
+	}
+
+	Contract ManageTeacherCRUDService::queryTeacher(id : String) : Teacher {
+
+		definition:
+			tea:Teacher = Teacher.allInstance()->any(t:Teacher | t.Id = id)
+
+		precondition:
+			tea.oclIsUndefined() = false
+
+		postcondition:
+			result = tea
+	}
+
+	Contract ManageGradeCRUDService::enterGrade(student : String, course : String, grade : Real) : Boolean {
+
+		definition:
+			stu:Student = Student.allInstance()->any(s:Student | s.Id = student),
+			cou:Course = Course.allInstance()->any(c:Course | c.Id = course),
+			sel:CourseSelectionRecord = CourseSelectionRecord.allInstance()->any(r:CourseSelectionRecord | r.Student = student and r.Course = course)
+
+		precondition:
+			stu.oclIsUndefined() = false and
+			cou.oclIsUndefined() = false and
+			sel.oclIsUndefined() = false
+
+		postcondition:
+			let gra:Grade in
+			gra.oclIsNew() and
+			gra.Student = stu.Id and
+			gra.Course = cou.Id and
+			gra.Grade = grade and
+			Grade.allInstance()->includes(gra) and
+			result = true
+	}
+
+	Contract ManageGradeCRUDService::modifyGrade(student : String, course : String, grade : Real) : Boolean {
+
+		definition:
+			stu:Student = Student.allInstance()->any(s:Student | s.Id = student),
+			cou:Course = Course.allInstance()->any(c:Course | c.Id = course),
+			gra:Grade = Grade.allInstance()->any(g:Grade | g.Student = stu.Id and g.Course = cou.Id)
+
+		precondition:
+			stu.oclIsUndefined() = false and
+			cou.oclIsUndefined() = false and
+			gra.oclIsUndefined() = false
+
+		postcondition:
+			gra.Student = stu.Id and
+			gra.Course = cou.Id and
+			gra.Grade = grade and
+			result = true
+	}
+
+	Contract ManageGradeCRUDService::queryGrade(student : String, course : String) : Real {
+
+		definition:
+			stu:Student = Student.allInstance()->any(s:Student | s.Id = student),
+			cou:Course = Course.allInstance()->any(c:Course | c.Id = course),
+			gra:Grade = Grade.allInstance()->any(g:Grade | g.Student = stu.Id and g.Course = cou.Id)
+
+		precondition:
+			stu.oclIsUndefined() = false and
+			cou.oclIsUndefined() = false and
+			gra.oclIsUndefined() = false
+
+		postcondition:
+			result = gra.Grade
+	}
+
+	Contract SelectCourseService::selectCourse(student : String, course : String) : Boolean {
+
+		definition:
+			stu:Student = Student.allInstance()->any(s:Student | s.Id = student),
+			cou:Course = Course.allInstance()->any(c:Course | c.Id = course),
+			sel:CourseSelectionRecord = CourseSelectionRecord.allInstance()->any(r:CourseSelectionRecord | r.Student = student and r.Course = course)
+
+		precondition:
+			stu.oclIsUndefined() = false and
+			cou.oclIsUndefined() = false and
+			sel.oclIsUndefined() = true
+
+		postcondition:
+			let sel1:CourseSelectionRecord in
+			sel1.oclIsNew() and
+			sel1.Student = stu.Id and
+			sel1.Course = cou.Id and
+			CourseSelectionRecord.allInstance()->includes(sel1) and
+			result = true
+	}
+
+}
+
+DomainModel StudentMS { EntityContext AdministratorService { Entity User {
+		Id : String
+		Name : String
+		[INV]
+		inv UniqueUserId: User.allInstance()->isUnique(u:User | u.Id)
+	}
+
+	@AutoCRUD Entity Teacher extends User {
+		College : String
+	[Refer]
+		TeachertoCollege : College Association
+	}
+
+	@AutoCRUD Entity Grade {
+		Student: String
+		Course : String
+		Grade : Real
+
+		[Refer]
+		GradetoStudent : Student Association
+	} } EntityContext TeacherService { Entity Administrator extends User {
+	}
+
+	@AutoCRUD Entity College {
+		Id : String
+		Name : String
+
+		[Refer]
+		CollegetoMajor : Major* Association
+		[INV]
+		inv UniqueCollegeId: College.allInstance()->isUnique(c:College | c.Id)
+	}
+
+	@AutoCRUD Entity Student extends User {
+		College : String
+		Major : String
+
+		[Refer]
+		StudenttoCourse : Course* Association
+	StudenttoCollege : College Association
+		StudenttoMajor : Major Association
+	} } EntityContext StudentService {
+
+	@AutoCRUD Entity Major {
+		Id : String
+		Name : String
+		[INV]
+		inv UniqueMajorId: Major.allInstance()->isUnique(m:Major | c.Id)
+	}
+
+	@AutoCRUD Entity CourseSelectionRecord {
+		Course: String
+		Student: String
+
+		[Refer]
+		CourseSelectionRecordtoStudent : Student Association
+	}
+
+@AutoCRUD Entity Course {
+		Id : String
+		Name : String
+		Teacher : String
+
+		[Refer]
+		CoursetoCourseSelectionRecord : CourseSelectionRecord Association
+		[INV]
+		inv UniqueCourseId: Course.allInstance()->isUnique(c:Course | c.Id)
+	} } }

@@ -31,5 +31,10 @@
    7. 类数量：9
 
 4. 需求原型化结果截图
-
    ![](Prototype.png)
+   
+5. 系统架构截图
+   ![](studentms.svg)
+   ![](MicroServiceModel.svg)
+6. 面向对象类图
+   ![](studentms_Class_Diagram.svg)
